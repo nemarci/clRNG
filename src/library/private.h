@@ -45,7 +45,7 @@
  *  @param[in]  ...     Additional arguments for the format string.
  *  @return     The value of err (for convenience).
  */
-clrngStatus clrngSetErrorString(cl_int err, const char* msg, ...);
+clrngStatus clrngSetErrorString(cl_int err);
 
 
 #endif

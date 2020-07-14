@@ -54,23 +54,7 @@ static const char MSG_INVALID_STREAM_CREATOR[]  = "invalid stream creator";
 static const char MSG_INVALID_SEED[]            = "invalid seed";
 
 
-clrngStatus clrngSetErrorString(cl_int err, const char* msg, ...)
+clrngStatus clrngSetErrorString(cl_int err)
 {
-    char formatted[1024];
-    const char* base;
-    switch (err) {
-        CASE_ERR(SUCCESS);
-        CASE_ERR(OUT_OF_RESOURCES);
-        CASE_ERR(INVALID_VALUE);
-        CASE_ERR(INVALID_RNG_TYPE);
-        CASE_ERR(INVALID_STREAM_CREATOR);
-        CASE_ERR(INVALID_SEED);
-        default: base = MSG_DEFAULT;
-    }
-    va_list args;
-    va_start(args, msg);
-    vsprintf(formatted, msg, args);
-    sprintf(errorString, "[%s] %s", base, formatted);
-    va_end(args);
-	return (clrngStatus)err;
+    return (clrngStatus)err;
 }

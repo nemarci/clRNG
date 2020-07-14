@@ -73,16 +73,16 @@ static clrngStatus validateSeed(const clrngLfsr113StreamState* seed)
 {
 	// Check that the seeds have valid values
 	if (seed->g[0] < 2)
-		return clrngSetErrorString(CLRNG_INVALID_SEED, "seed.g[%u] must be greater than 1", 0);
+		return clrngSetErrorString(CLRNG_INVALID_SEED);
 
 	if (seed->g[1] < 8)
-		return clrngSetErrorString(CLRNG_INVALID_SEED, "seed.g[%u] must be greater than 7", 1);
+		return clrngSetErrorString(CLRNG_INVALID_SEED);
 
 	if (seed->g[2] < 16)
-		return clrngSetErrorString(CLRNG_INVALID_SEED, "seed.g[%u] must be greater than 15", 2);
+		return clrngSetErrorString(CLRNG_INVALID_SEED);
 
 	if (seed->g[3] < 128)
-		return clrngSetErrorString(CLRNG_INVALID_SEED, "seed.g[%u] must be greater than 127", 3);
+		return clrngSetErrorString(CLRNG_INVALID_SEED);
 
 	return CLRNG_SUCCESS;
 }
@@ -96,7 +96,7 @@ clrngLfsr113StreamCreator* clrngLfsr113CopyStreamCreator(const clrngLfsr113Strea
 
 	if (newCreator == NULL)
 		// allocation failed
-		err_ = clrngSetErrorString(CLRNG_OUT_OF_RESOURCES, "%s(): could not allocate memory for stream creator", __func__);
+		err_ = clrngSetErrorString(CLRNG_OUT_OF_RESOURCES);
 	else {
 		if (creator == NULL)
 			creator = &defaultStreamCreator;
@@ -130,9 +130,9 @@ clrngStatus clrngLfsr113SetBaseCreatorState(clrngLfsr113StreamCreator* creator, 
 {
 	//Check params
 	if (creator == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_STREAM_CREATOR, "%s(): modifying the default stream creator is forbidden", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_STREAM_CREATOR);
 	if (baseState == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): baseState cannot be NULL", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 
 	clrngStatus err = validateSeed(baseState);
 
@@ -146,7 +146,7 @@ clrngStatus clrngLfsr113SetBaseCreatorState(clrngLfsr113StreamCreator* creator, 
 
 clrngStatus clrngLfsr113ChangeStreamsSpacing(clrngLfsr113StreamCreator* creator, cl_int e, cl_int c)
 {
-	return clrngSetErrorString(CLRNG_FUNCTION_NOT_IMPLEMENTED, "%s(): Not Implemented", __func__);
+	return clrngSetErrorString(CLRNG_FUNCTION_NOT_IMPLEMENTED);
 }
 
 clrngLfsr113Stream* clrngLfsr113AllocStreams(size_t count, size_t* bufSize, clrngStatus* err)
@@ -159,7 +159,7 @@ clrngLfsr113Stream* clrngLfsr113AllocStreams(size_t count, size_t* bufSize, clrn
 
 	if (buf == NULL) {
 		// allocation failed
-		err_ = clrngSetErrorString(CLRNG_OUT_OF_RESOURCES, "%s(): could not allocate memory for streams", __func__);
+		err_ = clrngSetErrorString(CLRNG_OUT_OF_RESOURCES);
 		bufSize_ = 0;
 	}
 
@@ -241,7 +241,7 @@ static clrngStatus Lfsr113CreateStream(clrngLfsr113StreamCreator* creator, clrng
 {
 	//Check params
 	if (buffer == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): buffer cannot be NULL", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 
 	// use default creator if not given
 	if (creator == NULL)
@@ -296,7 +296,7 @@ clrngLfsr113Stream* clrngLfsr113CopyStreams(size_t count, const clrngLfsr113Stre
 
 	//Check params
 	if (streams == NULL)
-		err_ = clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): stream cannot be NULL", __func__);
+		err_ = clrngSetErrorString(CLRNG_INVALID_VALUE);
 
 	if (err_ == CLRNG_SUCCESS)
 		dest = clrngLfsr113AllocStreams(count, NULL, &err_);
@@ -330,16 +330,16 @@ clrngLfsr113Stream* clrngLfsr113MakeSubstreams(clrngLfsr113Stream* stream, size_
 
 clrngStatus clrngLfsr113AdvanceStreams(size_t count, clrngLfsr113Stream* streams, cl_int e, cl_int c)
 {
-	return clrngSetErrorString(CLRNG_FUNCTION_NOT_IMPLEMENTED, "%s(): Not Implemented", __func__);
+	return clrngSetErrorString(CLRNG_FUNCTION_NOT_IMPLEMENTED);
 }
 
 clrngStatus clrngLfsr113WriteStreamInfo(const clrngLfsr113Stream* stream, FILE *file)
 {
 	//Check params
 	if (stream == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): stream cannot be NULL", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if (file == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): file cannot be NULL", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 
 	// The Initial state of the Stream
 	fprintf(file, "\n   initial = { ");
@@ -365,19 +365,19 @@ clrngStatus clrngLfsr113DeviceRandomU01Array_(size_t streamCount, cl_mem streams
 {
 	//Check params
 	if (streamCount < 1)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): streamCount cannot be less than 1", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if (streams == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): stream_array cannot be NULL", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if (numberCount < 1)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): numberCount cannot be less than 1", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if (outBuffer == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): buffer cannot be NULL", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if (commQueues == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): commQueues cannot be NULL", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if (numberCount % streamCount != 0)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): numberCount must be a multiple of streamCount", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if (numQueuesAndEvents != 1)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): numQueuesAndEvents can only have the value '1'", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 
 	//***************************************************************************************
 	//Get the context
@@ -386,13 +386,13 @@ clrngStatus clrngLfsr113DeviceRandomU01Array_(size_t streamCount, cl_mem streams
 	cl_context ctx;
 	err = clGetCommandQueueInfo(commQueues[0], CL_QUEUE_CONTEXT, sizeof(cl_context), &ctx, NULL);
 	if (err != CLRNG_SUCCESS)
-		return clrngSetErrorString(err, "%s(): cannot retrieve context", __func__);
+		return clrngSetErrorString(err);
 
 	//Get the Device
 	cl_device_id dev;
 	err = clGetCommandQueueInfo(commQueues[0], CL_QUEUE_DEVICE, sizeof(cl_device_id), &dev, NULL);
 	if (err != CLRNG_SUCCESS)
-		return clrngSetErrorString(err, "%s(): cannot retrieve the device", __func__);
+		return clrngSetErrorString(err);
 
 	//create the program
 	const char *sources[4] = {
@@ -413,7 +413,7 @@ clrngStatus clrngLfsr113DeviceRandomU01Array_(size_t streamCount, cl_mem streams
 	};
 	cl_program program = clCreateProgramWithSource(ctx, 4, sources, NULL, &err);
 	if (err != CLRNG_SUCCESS)
-		return clrngSetErrorString(err, "%s(): cannot create program", __func__);
+		return clrngSetErrorString(err);
 
 	// construct compiler options
 	const char* includes = clrngGetLibraryDeviceIncludes(&err);
@@ -437,7 +437,7 @@ clrngStatus clrngLfsr113DeviceRandomU01Array_(size_t streamCount, cl_mem streams
 	// Create the kernel
 	cl_kernel kernel = clCreateKernel(program, "fillBufferU01", &err);
 	if (err != CLRNG_SUCCESS)
-		return clrngSetErrorString(err, "%s(): cannot create kernel", __func__);
+		return clrngSetErrorString(err);
 
 	//***************************************************************************************
 	//Random numbers generated by each work-item
@@ -447,7 +447,7 @@ clrngStatus clrngLfsr113DeviceRandomU01Array_(size_t streamCount, cl_mem streams
 	size_t local_size;
 	err = clGetDeviceInfo(dev, CL_DEVICE_MAX_WORK_GROUP_SIZE, sizeof(local_size), &local_size, NULL);
 	if (err != CLRNG_SUCCESS)
-		return clrngSetErrorString(err, "%s(): cannot read CL_DEVICE_MAX_WORK_GROUP_SIZE", __func__);
+		return clrngSetErrorString(err);
 
 	if (local_size > streamCount)
 		local_size = streamCount;
@@ -457,12 +457,12 @@ clrngStatus clrngLfsr113DeviceRandomU01Array_(size_t streamCount, cl_mem streams
 	err |= clSetKernelArg(kernel, 1, sizeof(number_count_per_stream), &number_count_per_stream);
 	err |= clSetKernelArg(kernel, 2, sizeof(outBuffer), &outBuffer);
 	if (err != CLRNG_SUCCESS)
-		return clrngSetErrorString(err, "%s(): cannot create kernel arguments", __func__);
+		return clrngSetErrorString(err);
 
 	// Enqueue kernel
 	err = clEnqueueNDRangeKernel(commQueues[0], kernel, 1, NULL, &streamCount, &local_size, numWaitEvents, waitEvents, outEvents);
 	if (err != CLRNG_SUCCESS)
-		return clrngSetErrorString(err, "%s(): cannot enqueue kernel", __func__);
+		return clrngSetErrorString(err);
 
 	clReleaseKernel(kernel);
 	clReleaseProgram(program);

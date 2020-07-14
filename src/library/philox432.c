@@ -87,7 +87,7 @@ clrngPhilox432StreamCreator* clrngPhilox432CopyStreamCreator(const clrngPhilox43
 
 	if (newCreator == NULL)
 		// allocation failed
-		err_ = clrngSetErrorString(CLRNG_OUT_OF_RESOURCES, "%s(): could not allocate memory for stream creator", __func__);
+		err_ = clrngSetErrorString(CLRNG_OUT_OF_RESOURCES);
 	else {
 		if (creator == NULL)
 			creator = &defaultStreamCreator;
@@ -121,9 +121,9 @@ clrngStatus clrngPhilox432SetBaseCreatorState(clrngPhilox432StreamCreator* creat
 {
 	//Check params
 	if (creator == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_STREAM_CREATOR, "%s(): modifying the default stream creator is forbidden", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_STREAM_CREATOR);
 	if (baseState == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): baseState cannot be NULL", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 
 	clrngStatus err = validateSeed(baseState);
 
@@ -139,11 +139,11 @@ clrngStatus clrngPhilox432ChangeStreamsSpacing(clrngPhilox432StreamCreator* crea
 {
 	//Check params
 	if (creator == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_STREAM_CREATOR, "%s(): modifying the default stream creator is forbidden", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_STREAM_CREATOR);
 	if (e < 2 && e != 0)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): e must be 0 or >= 2", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if ((c % 4) != 0)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): c must be a multiple of 4", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 
 	//Create Base Creator
 	clrngPhilox432StreamCreator* baseCreator = clrngPhilox432CopyStreamCreator(NULL, NULL);
@@ -174,7 +174,7 @@ clrngPhilox432Stream* clrngPhilox432AllocStreams(size_t count, size_t* bufSize, 
 
 	if (buf == NULL) {
 		// allocation failed
-		err_ = clrngSetErrorString(CLRNG_OUT_OF_RESOURCES, "%s(): could not allocate memory for streams", __func__);
+		err_ = clrngSetErrorString(CLRNG_OUT_OF_RESOURCES);
 		bufSize_ = 0;
 	}
 
@@ -200,7 +200,7 @@ static clrngStatus Philox432CreateStream(clrngPhilox432StreamCreator* creator, c
 {
 	//Check params
 	if (buffer == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): buffer cannot be NULL", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 
 	// use default creator if not given
 	if (creator == NULL)
@@ -255,7 +255,7 @@ clrngPhilox432Stream* clrngPhilox432CopyStreams(size_t count, const clrngPhilox4
 
 	//Check params
 	if (streams == NULL)
-		err_ = clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): stream cannot be NULL", __func__);
+		err_ = clrngSetErrorString(CLRNG_INVALID_VALUE);
 
 	if (err_ == CLRNG_SUCCESS)
 		dest = clrngPhilox432AllocStreams(count, NULL, &err_);
@@ -291,9 +291,9 @@ clrngStatus clrngPhilox432WriteStreamInfo(const clrngPhilox432Stream* stream, FI
 {
 	//Check params
 	if (stream == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): stream cannot be NULL", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if (file == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): file cannot be NULL", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 
 	//The Initial state of the Stream
 	//fprintf(file, "initial : (ctr, index)=( %u %u %u %u , [%u]) [deck = { %u %u %u %u}] \n\n",
@@ -472,9 +472,9 @@ clrngStatus clrngPhilox432AdvanceStreams(size_t count, clrngPhilox432Stream* str
 {
 	//Check params
 	if (streams == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): streams cannot be NULL", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if (e > 127)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): 'e' can not exceed 127", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 
 	//Advance streams
 	for (size_t i = 0; i < count; i++)
@@ -490,19 +490,19 @@ clrngStatus clrngPhilox432DeviceRandomU01Array_(size_t streamCount, cl_mem strea
 {
 	//Check params
 	if (streamCount < 1)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): streamCount cannot be less than 1", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if (streams == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): stream_array cannot be NULL", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if (numberCount < 1)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): numberCount cannot be less than 1", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if (outBuffer == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): buffer cannot be NULL", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if (commQueues == NULL)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): commQueues cannot be NULL", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if (numberCount % streamCount != 0)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): numberCount must be a multiple of streamCount", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 	if (numQueuesAndEvents != 1)
-		return clrngSetErrorString(CLRNG_INVALID_VALUE, "%s(): numQueuesAndEvents can only have the value '1'", __func__);
+		return clrngSetErrorString(CLRNG_INVALID_VALUE);
 
 	//***************************************************************************************
 	//Get the context
@@ -511,13 +511,13 @@ clrngStatus clrngPhilox432DeviceRandomU01Array_(size_t streamCount, cl_mem strea
 	cl_context ctx;
 	err = clGetCommandQueueInfo(commQueues[0], CL_QUEUE_CONTEXT, sizeof(cl_context), &ctx, NULL);
 	if (err != CLRNG_SUCCESS)
-		return clrngSetErrorString(err, "%s(): cannot retrieve context", __func__);
+		return clrngSetErrorString(err);
 
 	//Get the Device
 	cl_device_id dev;
 	err = clGetCommandQueueInfo(commQueues[0], CL_QUEUE_DEVICE, sizeof(cl_device_id), &dev, NULL);
 	if (err != CLRNG_SUCCESS)
-		return clrngSetErrorString(err, "%s(): cannot retrieve the device", __func__);
+		return clrngSetErrorString(err);
 
 	//create the program
 	const char *sources[4] = {
@@ -539,7 +539,7 @@ clrngStatus clrngPhilox432DeviceRandomU01Array_(size_t streamCount, cl_mem strea
 
 	cl_program program = clCreateProgramWithSource(ctx, 4, sources, NULL, &err);
 	if (err != CLRNG_SUCCESS)
-		return clrngSetErrorString(err, "%s(): cannot create program", __func__);
+		return clrngSetErrorString(err);
 
 	// construct compiler options
 	const char* includes = clrngGetLibraryDeviceIncludes(&err);
@@ -563,7 +563,7 @@ clrngStatus clrngPhilox432DeviceRandomU01Array_(size_t streamCount, cl_mem strea
 	// Create the kernel
 	cl_kernel kernel = clCreateKernel(program, "fillBufferU01", &err);
 	if (err != CLRNG_SUCCESS)
-		return clrngSetErrorString(err, "%s(): cannot create kernel", __func__);
+		return clrngSetErrorString(err);
 
 	//***************************************************************************************
 	//Random numbers generated by each work-item
@@ -573,7 +573,7 @@ clrngStatus clrngPhilox432DeviceRandomU01Array_(size_t streamCount, cl_mem strea
 	size_t local_size;
 	err = clGetDeviceInfo(dev, CL_DEVICE_MAX_WORK_GROUP_SIZE, sizeof(local_size), &local_size, NULL);
 	if (err != CLRNG_SUCCESS)
-		return clrngSetErrorString(err, "%s(): cannot read CL_DEVICE_MAX_WORK_GROUP_SIZE", __func__);
+		return clrngSetErrorString(err);
 
 	if (local_size > streamCount)
 		local_size = streamCount;
@@ -583,12 +583,12 @@ clrngStatus clrngPhilox432DeviceRandomU01Array_(size_t streamCount, cl_mem strea
 	err |= clSetKernelArg(kernel, 1, sizeof(number_count_per_stream), &number_count_per_stream);
 	err |= clSetKernelArg(kernel, 2, sizeof(outBuffer), &outBuffer);
 	if (err != CLRNG_SUCCESS)
-		return clrngSetErrorString(err, "%s(): cannot create kernel arguments", __func__);
+		return clrngSetErrorString(err);
 
 	// Enqueue kernel
 	err = clEnqueueNDRangeKernel(commQueues[0], kernel, 1, NULL, &streamCount, &local_size, numWaitEvents, waitEvents, outEvents);
 	if (err != CLRNG_SUCCESS)
-		return clrngSetErrorString(err, "%s(): cannot enqueue kernel", __func__);
+		return clrngSetErrorString(err);
 
 	clReleaseKernel(kernel);
 	clReleaseProgram(program);

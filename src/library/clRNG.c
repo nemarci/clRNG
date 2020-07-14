@@ -106,7 +106,7 @@ const char* clrngGetLibraryDeviceIncludes(cl_int* err)
 	if (nbytes >= sizeof(lib_includes)) {
 #endif
 		if (err)
-			*err = clrngSetErrorString(CLRNG_OUT_OF_RESOURCES, "value of CLRNG_ROOT too long (max = %u)", sizeof(lib_includes) - 16);
+			*err = clrngSetErrorString(CLRNG_OUT_OF_RESOURCES);
 		return NULL;
 	}
 	return lib_includes;
