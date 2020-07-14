@@ -76,7 +76,7 @@ typedef enum clrngStatus_ {
 /*! This macro does nothing.
  *  It is defined for convenience when adapting host code for the device.
  */
-#define clrngSetErrorString(err, ...) (err)
+#define clrngSetErrorString(err) (err)
 
 
 #endif
